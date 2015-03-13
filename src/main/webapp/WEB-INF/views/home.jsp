@@ -114,8 +114,8 @@
                         <c:forEach var="i" begin="0" end="4">
                             <tr class="success clickable" data-href="/book/${books[i].id}">
                                 <th scope="row">${i}</th>
-                                <td>${books[i].title}</td>
-                                <td>${books[i].authorsString}</td>
+                                <td><c:out value="${books[i].title}"/></td>
+                                <td><c:out value="${books[i].authorsString}"/></td>
                             </tr>
                         </c:forEach>
                         </tbody>

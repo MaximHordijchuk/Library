@@ -41,6 +41,7 @@
 
     <spring:url var="authUrl" value="/static/j_spring_security_check" />
     <form class="form-signin" method="post" action="${authUrl}">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         <h2 class="form-signin-heading">Авторизуйтеся</h2>
         <label for="inputUsername" class="sr-only">Логін</label>
         <input type="text" id="inputUsername" name="j_username"

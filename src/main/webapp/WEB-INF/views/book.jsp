@@ -75,9 +75,9 @@
             <div class="row">
                 <div class="panel panel-default well" id="book-info">
                     <c:if test="${isSelectedBook}">
-                        <h2>${selectedBook.title}</h2>
-                        <p><em>Автори: ${selectedBook.authorsString}</em></p>
-                        <p>${selectedBook.description}</p>
+                        <h2><c:out value="${selectedBook.title}"/></h2>
+                        <p><em>Автори: <c:out value="${selectedBook.authorsString}"/></em></p>
+                        <p><c:out value="${selectedBook.description}"/></p>
                     </c:if>
                     <c:if test="${!isSelectedBook}">
                         <h2>Про книгу</h2>
