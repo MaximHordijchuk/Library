@@ -50,5 +50,7 @@
     <beans:import resource="db-config.xml" />
 
     <task:annotation-driven />
+
+
 	
 </beans:beans>

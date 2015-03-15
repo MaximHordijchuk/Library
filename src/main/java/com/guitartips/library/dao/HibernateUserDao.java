@@ -2,10 +2,11 @@ package com.guitartips.library.dao;
 
 import com.guitartips.library.domain.Book;
 import com.guitartips.library.domain.User;
-import org.hibernate.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.HibernateException;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -19,16 +20,8 @@ public class HibernateUserDao implements UserDao {
             "FROM BOOK INNER JOIN USER_BOOK ON BOOK.id = USER_BOOK.book_id\n" +
             "WHERE username = :username";
 
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    public HibernateUserDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    private Session currentSession() {
-        return sessionFactory.getCurrentSession();
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void addUser(User user) {
@@ -58,8 +51,8 @@ public class HibernateUserDao implements UserDao {
             SQLQuery query = session.createSQLQuery(GET_USER_BOOKS_QUERY).addEntity(Book.class);
             Query final_query = query.setParameter("username", username);
             return final_query.list();*/
-            return currentSession().createSQLQuery(GET_USER_BOOKS_QUERY).addEntity(Book.class)
-                    .setParameter("username", username).list();
+            return entityManager.createNativeQuery(GET_USER_BOOKS_QUERY, Book.class)
+                    .setParameter("username", username).getResultList();
         } catch (HibernateException ex) {
             System.out.println(ex.getMessage());
         }

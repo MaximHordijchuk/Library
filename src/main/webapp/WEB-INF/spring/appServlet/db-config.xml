@@ -12,16 +12,15 @@
        http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.guitartips.library" />
-    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <!--Changing exceptions of @Repository classes to spring exceptions-->
     <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-    <!-- Менеджер транзакций -->
-    <bean id="transactionManager"
-          class="org.springframework.orm.hibernate3.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
+    <!-- Transacion manager -->
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory" />
     </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="propertyConfigurer"
           class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
@@ -36,7 +35,36 @@
           p:initialSize="${jdbc.initialSize}"
           p:maxActive="${jdbc.maxActive}"/>
 
-    <bean id="sessionFactory"
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="packagesToScan" value="com.guitartips.library.domain" />
+        <property name="jpaVendorAdapter" ref="jpaAdapter"/>
+        <property name="jpaProperties">
+            <props>
+                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.query.substitutions">true 1, false 0</prop>
+                <prop key="hibernate.connection.autocommit">true</prop>
+                <prop key="hibernate.FlushMode">AUTO</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.dialect">${jdbc.dialect}</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="jpaAdapter"
+          class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
+          p:database="MYSQL"
+          p:showSql="true"/>
+
+    <!-- Old Hibernate properties -->
+
+    <!--<bean id="transactionManager"
+          class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>-->
+
+    <!--<bean id="sessionFactory"
           class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="configLocation">
@@ -52,7 +80,6 @@
                 <prop key="hibernate.connection.charSet">UTF-8</prop>
             </props>
         </property>
-    </bean>
-
+    </bean>-->
 
 </beans>

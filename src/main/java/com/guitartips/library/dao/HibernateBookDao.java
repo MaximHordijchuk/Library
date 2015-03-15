@@ -2,10 +2,10 @@ package com.guitartips.library.dao;
 
 import com.guitartips.library.domain.Book;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * Created by max on 02.02.15.
@@ -19,27 +19,19 @@ public class HibernateBookDao implements BookDao {
             "INNER JOIN user_book ON book.book_id = user_book.book_id\n" +
             "WHERE user_id = :user_id";
 
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    public HibernateBookDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    private Session currentSession() {
-        return sessionFactory.getCurrentSession();
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void addBook(Book book) {
-        currentSession().save(book);
+        entityManager.persist(book);
     }
 
     @Override
     public Book getBookById(int id) {
         Book book = null;
         try {
-            book = (Book) currentSession().get(Book.class, id);
+            book = entityManager.find(Book.class, id);
         } catch (HibernateException ex) {
             System.out.println(ex.getMessage());
         }
@@ -64,7 +56,7 @@ public class HibernateBookDao implements BookDao {
 
     @Override
     public void updateBook(Book book) {
-        currentSession().update(book);
+        entityManager.merge(book);
     }
 
     @Override

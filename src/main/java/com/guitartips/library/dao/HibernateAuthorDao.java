@@ -2,11 +2,10 @@ package com.guitartips.library.dao;
 
 import com.guitartips.library.domain.Author;
 import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.List;
 
 /**
@@ -21,16 +20,8 @@ public class HibernateAuthorDao implements AuthorDao {
                     "FROM AUTHOR INNER JOIN AUTHOR_BOOK ON AUTHOR.id = AUTHOR_BOOK.author_id\n" +
                     "WHERE book_id = :bookId";
 
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    public HibernateAuthorDao(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    private Session currentSession() {
-        return sessionFactory.getCurrentSession();
-    }
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
     public void addAuthor(Author author) {
@@ -56,8 +47,8 @@ public class HibernateAuthorDao implements AuthorDao {
     @SuppressWarnings("unchecked")
     public List<Author> getBookAuthors(int bookId) {
         try {
-            return currentSession().createSQLQuery(GET_BOOK_AUTHORS_QUERY).addEntity(Author.class)
-                    .setParameter("bookId", bookId).list();
+            return entityManager.createNativeQuery(GET_BOOK_AUTHORS_QUERY, Author.class)
+                    .setParameter("bookId", bookId).getResultList();
         } catch (HibernateException ex) {
             System.out.println(ex.getMessage());
         }
