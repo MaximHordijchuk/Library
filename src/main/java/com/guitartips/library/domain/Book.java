@@ -1,6 +1,7 @@
 package com.guitartips.library.domain;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -21,10 +22,16 @@ public class Book {
     @Column(name = "description", nullable = false, length = 1000)
     private String description;
 
-    @Transient
-    private List<Author> authors;
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "AUTHOR_BOOK",
+            joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false, updatable = false) },
+            inverseJoinColumns = {@JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false, updatable = false) })
+    private List<Author> authors = new ArrayList<>();
 
     public String getAuthorsString() {
+        if (authors == null || authors.size() == 0) {
+            return "";
+        }
         StringBuilder authorsString = new StringBuilder();
         for (int i = 0; i < authors.size() - 1; i++) {
             authorsString.append(authors.get(i).getName() + ", ");

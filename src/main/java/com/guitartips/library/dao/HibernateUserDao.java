@@ -2,11 +2,11 @@ package com.guitartips.library.dao;
 
 import com.guitartips.library.domain.Book;
 import com.guitartips.library.domain.User;
-import org.hibernate.HibernateException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 /**
@@ -53,7 +53,7 @@ public class HibernateUserDao implements UserDao {
             return final_query.list();*/
             return entityManager.createNativeQuery(GET_USER_BOOKS_QUERY, Book.class)
                     .setParameter("username", username).getResultList();
-        } catch (HibernateException ex) {
+        } catch (PersistenceException ex) {
             System.out.println(ex.getMessage());
         }
         return null;
