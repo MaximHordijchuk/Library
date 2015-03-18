@@ -22,10 +22,7 @@ public class Book {
     @Column(name = "description", nullable = false, length = 1000)
     private String description;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "AUTHOR_BOOK",
-            joinColumns = {@JoinColumn(name = "book_id", referencedColumnName = "id", nullable = false, updatable = false) },
-            inverseJoinColumns = {@JoinColumn(name = "author_id", referencedColumnName = "id", nullable = false, updatable = false) })
+    @Transient
     private List<Author> authors = new ArrayList<>();
 
     public String getAuthorsString() {

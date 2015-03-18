@@ -55,12 +55,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<Book> getUserBooks(String username) {
         List<Book> books = userDao.getUserBooks(username);
-        List<Author> authors = books.get(0).getAuthors();
-        System.out.println(authors);
-        /*for (Book book : books) {
+        for (Book book : books) {
             List<Author> authors = authorDao.getBookAuthors(book.getId());
             book.setAuthors(authors);
-        }*/
+        }
         return books;
     }
 
