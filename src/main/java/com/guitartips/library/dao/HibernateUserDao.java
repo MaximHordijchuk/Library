@@ -1,12 +1,15 @@
 package com.guitartips.library.dao;
 
 import com.guitartips.library.domain.Book;
+import com.guitartips.library.domain.Commit;
 import com.guitartips.library.domain.User;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -15,10 +18,6 @@ import java.util.List;
  */
 @Repository
 public class HibernateUserDao implements UserDao {
-    private static final String GET_USER_BOOKS_QUERY =
-            "SELECT BOOK.*\n" +
-            "FROM BOOK INNER JOIN USER_BOOK ON BOOK.id = USER_BOOK.book_id\n" +
-            "WHERE username = :username";
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -29,7 +28,7 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    public User getUserById(int userId) {
+    public User getUserByUsername(String username) {
         return null;
     }
 
@@ -39,7 +38,7 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    public void removeUser(int userId) {
+    public void removeUser(String username) {
 
     }
 
@@ -47,12 +46,8 @@ public class HibernateUserDao implements UserDao {
     @SuppressWarnings("unchecked")
     public List<Book> getUserBooks(String username) {
         try {
-            /*Session session = currentSession();
-            SQLQuery query = session.createSQLQuery(GET_USER_BOOKS_QUERY).addEntity(Book.class);
-            Query final_query = query.setParameter("username", username);
-            return final_query.list();*/
-            return entityManager.createNativeQuery(GET_USER_BOOKS_QUERY, Book.class)
-                    .setParameter("username", username).getResultList();
+            User user = entityManager.find(User.class, username);
+            return user.getBooks();
         } catch (PersistenceException ex) {
             System.out.println(ex.getMessage());
         }
@@ -61,7 +56,12 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    public void addBook(int userId, int bookId) {
-
+    public void addBook(String username, int bookId) {
+        try {
+            Commit commit = new Commit(username, bookId, Date.valueOf(LocalDate.now()), "Nice book!");
+            entityManager.persist(commit);
+        } catch (PersistenceException ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }

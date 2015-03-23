@@ -41,7 +41,7 @@
         <property name="jpaVendorAdapter" ref="jpaAdapter"/>
         <property name="jpaProperties">
             <props>
-                <prop key="hibernate.hbm2ddl.auto">create</prop>
+                <prop key="hibernate.hbm2ddl.auto">none</prop>
                 <prop key="hibernate.query.substitutions">true 1, false 0</prop>
                 <prop key="hibernate.connection.autocommit">true</prop>
                 <prop key="hibernate.FlushMode">AUTO</prop>

@@ -13,14 +13,14 @@ public interface UserDao {
 
     public void addUser(User user);
 
-    public User getUserById(int userId);
+    public User getUserByUsername(String username);
 
     public void updateUser(User user);
 
-    public void removeUser(int userId);
+    public void removeUser(String username);
 
     public List<Book> getUserBooks(String username);
 
-    public void addBook(int userId, int bookId);
+    public void addBook(String username, int bookId);
 
 }

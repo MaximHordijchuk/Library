@@ -23,8 +23,9 @@ public class HibernateBookDao implements BookDao {
     private EntityManager entityManager;
 
     @Override
-    public void addBook(Book book) {
+    public int addBook(Book book) {
         entityManager.persist(book);
+        return book.getId();
     }
 
     @Override

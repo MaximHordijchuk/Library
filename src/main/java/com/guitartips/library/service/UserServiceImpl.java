@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User getUserById(int userId) {
+    public User getUserByUsername(String username) {
         return null;
     }
 
@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void removeUser(int userId) {
+    public void removeUser(String username) {
 
     }
 
@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void addBook(int userId, int bookId) {
-
+    public void addBook(String username, int bookId) {
+        userDao.addBook(username, bookId);
     }
 }

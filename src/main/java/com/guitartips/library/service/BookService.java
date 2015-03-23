@@ -9,7 +9,7 @@ import com.guitartips.library.domain.Book;
  */
 public interface BookService {
 
-    public void addBook(Book book);
+    public int addBook(Book book);
 
     public Book getBookById(int bookId);
 

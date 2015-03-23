@@ -32,7 +32,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="i" begin="0" end="4">
+                <c:forEach var="i" begin="0" end="${fn:length(books) - 1}">
                     <tr class="success clickable" data-href="/book/${books[i].id}">
                         <th scope="row">${i + 1}</th>
                         <td><c:out value="${books[i].title}"/></td>
