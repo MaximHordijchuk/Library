@@ -1,9 +1,7 @@
 package com.guitartips.library.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
 
 /**
@@ -13,44 +11,68 @@ import java.sql.Date;
 @Entity
 @Table(name = "USER_BOOK")
 public class Commit {
-    @Id
-    @Column(name = "username", nullable = false, length = 15)
-    private String username;
 
-    @Column(name = "book_id")
-    private int bookId;
+    @EmbeddedId
+    private CommitKey commitKey;
 
     @Column(name = "date")
     private Date date;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "book_id", insertable=false, updatable=false)
+    private Book book;
+
     public Commit() {
     }
 
-    public Commit(String username, int bookId, Date date, String comment) {
-        this.username = username;
-        this.bookId = bookId;
+    public Commit(CommitKey commitKey, Date date, String comment) {
+        this.commitKey = commitKey;
         this.date = date;
         this.comment = comment;
     }
 
     @Column(name = "comment")
-
     private String comment;
 
-    public String getUsername() {
-        return username;
-    }
+    public static class CommitKey implements Serializable {
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+        @Column(name = "username", nullable = false, length = 15)
+        private String username;
 
-    public int getBookId() {
-        return bookId;
-    }
+        @Column(name = "book_id")
+        private int bookId;
 
-    public void setBookId(int bookId) {
-        this.bookId = bookId;
+        public CommitKey() {
+        }
+
+        public CommitKey(String username, int bookId) {
+            this.username = username;
+            this.bookId = bookId;
+        }
+
+        public String getUsername() {
+            return username;
+        }
+
+        public void setUsername(String username) {
+            this.username = username;
+        }
+
+        public int getBookId() {
+            return bookId;
+        }
+
+        public void setBookId(int bookId) {
+            this.bookId = bookId;
+        }
+
+        @Override
+        public String toString() {
+            return "CommitKey{" +
+                    "username='" + username + '\'' +
+                    ", bookId=" + bookId +
+                    '}';
+        }
     }
 
     public Date getDate() {
@@ -67,5 +89,31 @@ public class Commit {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    public CommitKey getCommitKey() {
+        return commitKey;
+    }
+
+    public void setCommitKey(CommitKey commitKey) {
+        this.commitKey = commitKey;
+    }
+
+    @Override
+    public String toString() {
+        return "Commit{" +
+                "commitKey=" + commitKey +
+                ", date=" + date +
+                ", book=" + book +
+                ", comment='" + comment + '\'' +
+                '}';
     }
 }

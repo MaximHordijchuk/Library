@@ -47,18 +47,34 @@ public class HibernateUserDao implements UserDao {
     public List<Book> getUserBooks(String username) {
         try {
             User user = entityManager.find(User.class, username);
-            return user.getBooks();
+            List<Book> books = user.getBooks();
+            books.size();
+            return books;
         } catch (PersistenceException ex) {
             System.out.println(ex.getMessage());
         }
         return null;
+    }
 
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Commit> getUserCommits(String username) {
+        try {
+            User user = entityManager.find(User.class, username);
+            List<Commit> commits = user.getCommits();
+            commits.size();
+            return commits;
+        } catch (PersistenceException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return null;
     }
 
     @Override
     public void addBook(String username, int bookId) {
         try {
-            Commit commit = new Commit(username, bookId, Date.valueOf(LocalDate.now()), "Nice book!");
+            Commit.CommitKey key = new Commit.CommitKey(username, bookId);
+            Commit commit = new Commit(key, Date.valueOf(LocalDate.now()), "Nice book!");
             entityManager.persist(commit);
         } catch (PersistenceException ex) {
             System.out.println(ex.getMessage());

@@ -19,10 +19,11 @@ public class Book {
     @Column(name = "title", nullable = false, length = 100)
     private String title;
 
-    @Column(name = "description", nullable = false, length = 1000)
-    private String description;
-
-    @Transient
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name="AUTHOR_BOOK",
+            joinColumns={@JoinColumn(name="book_id", referencedColumnName="id")},
+            inverseJoinColumns={@JoinColumn(name="author_id", referencedColumnName="id")})
     private List<Author> authors = new ArrayList<>();
 
     public String getAuthorsString() {
@@ -51,14 +52,6 @@ public class Book {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public List<Author> getAuthors() {

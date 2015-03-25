@@ -1,7 +1,8 @@
 package com.guitartips.library.web;
 
-import com.guitartips.library.domain.Book;
+import com.guitartips.library.domain.Commit;
 import com.guitartips.library.service.BookService;
+import com.guitartips.library.service.CommitService;
 import com.guitartips.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -24,13 +25,15 @@ public class HomeController {
     private BookService bookService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommitService commitService;
 
+    //TODO: if empty collection : redirect to book add page
     @RequestMapping("/")
     public String home(ModelMap model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<Book> books = userService.getUserBooks(auth.getName());
-        model.put("books", books);
-        model.put("isSelectedBook", false);
+        List<Commit> commits = userService.getUserCommits(auth.getName());
+        model.put("commits", commits);
         return "home";
     }
 

@@ -1,6 +1,7 @@
 package com.guitartips.library.service;
 
 import com.guitartips.library.domain.Book;
+import com.guitartips.library.domain.Commit;
 import com.guitartips.library.domain.User;
 
 import java.util.List;
@@ -21,6 +22,8 @@ public interface UserService {
 
     public List<Book> getUserBooks(String username);
 
-    public void addBook(String username, int bookId);
+    public void addNewBook(String username, Book book);
+
+    public List<Commit> getUserCommits(String username);
 
 }

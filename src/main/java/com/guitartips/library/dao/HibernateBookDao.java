@@ -14,11 +14,6 @@ import javax.persistence.PersistenceContext;
 @Repository
 public class HibernateBookDao implements BookDao {
 
-    private static final String GET_USER_BOOKS_QUERY = "SELECT book.book_id, book.title\n" +
-            "FROM book\n" +
-            "INNER JOIN user_book ON book.book_id = user_book.book_id\n" +
-            "WHERE user_id = :user_id";
-
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -38,22 +33,6 @@ public class HibernateBookDao implements BookDao {
         }
         return book;
     }
-
-    /*@Override
-    @SuppressWarnings("unchecked")
-    public List<Book> getBooks(int userId) {
-        try {
-            Session session = currentSession();
-            SQLQuery query = session.createSQLQuery(GET_USER_BOOKS_QUERY);
-            Query final_query = query.setParameter("user_id", userId);
-            return final_query.list();
-        } catch (HibernateException ex) {
-            ex.printStackTrace();
-        }
-
-        return null;
-        //return currentSession().createQuery(GET_USER_BOOKS_QUERY).setParameter("user_id", userId).list();
-    }*/
 
     @Override
     public void updateBook(Book book) {

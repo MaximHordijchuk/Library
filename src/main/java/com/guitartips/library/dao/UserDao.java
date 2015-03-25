@@ -1,6 +1,7 @@
 package com.guitartips.library.dao;
 
 import com.guitartips.library.domain.Book;
+import com.guitartips.library.domain.Commit;
 import com.guitartips.library.domain.User;
 
 import java.util.List;
@@ -20,6 +21,8 @@ public interface UserDao {
     public void removeUser(String username);
 
     public List<Book> getUserBooks(String username);
+
+    public List<Commit> getUserCommits(String username);
 
     public void addBook(String username, int bookId);
 

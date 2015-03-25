@@ -1,9 +1,10 @@
 package com.guitartips.library.service;
 
 import com.guitartips.library.dao.AuthorDao;
+import com.guitartips.library.dao.BookDao;
 import com.guitartips.library.dao.UserDao;
-import com.guitartips.library.domain.Author;
 import com.guitartips.library.domain.Book;
+import com.guitartips.library.domain.Commit;
 import com.guitartips.library.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +19,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    UserDao userDao;
-    AuthorDao authorDao;
-
     @Autowired
-    public UserServiceImpl(UserDao userDao, AuthorDao authorDao) {
-        this.userDao = userDao;
-        this.authorDao = authorDao;
-    }
+    UserDao userDao;
+    @Autowired
+    AuthorDao authorDao;
+    @Autowired
+    BookDao bookDao;
 
     @Override
     @Transactional
@@ -54,17 +53,19 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public List<Book> getUserBooks(String username) {
-        List<Book> books = userDao.getUserBooks(username);
-        for (Book book : books) {
-            List<Author> authors = authorDao.getBookAuthors(book.getId());
-            book.setAuthors(authors);
-        }
-        return books;
+        return userDao.getUserBooks(username);
     }
 
     @Override
     @Transactional
-    public void addBook(String username, int bookId) {
+    public List<Commit> getUserCommits(String username) {
+        return userDao.getUserCommits(username);
+    }
+
+    @Override
+    @Transactional
+    public void addNewBook(String username, Book book) {
+        int bookId = bookDao.addBook(book);
         userDao.addBook(username, bookId);
     }
 }

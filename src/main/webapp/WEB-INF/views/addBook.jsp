@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
+            <%--<div class="form-group">
                 <div class="row">
                     <div class="col-xs-8">
                     <label class="control-label">Опис книги</label>
@@ -46,7 +46,7 @@
                                 placeholder="«Кобзар» — назва збірки поетичних творів Тараса Григоровича Шевченка."></textarea>
                     </div>
                 </div>
-            </div>
+            </div>--%>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Додати книгу</button>
                 <button type="button" class="btn btn-default">Відмінити</button>

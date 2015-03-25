@@ -45,11 +45,11 @@ public class BookController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String  addNewBook(ModelMap model, @ModelAttribute Book book) {
         if (book != null) {
+            // check
             // return errors
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        int bookId = bookService.addBook(book);
-        userService.addBook(auth.getName(), bookId);
+        userService.addNewBook(auth.getName(), book);
         return "redirect:/";
     }
 
