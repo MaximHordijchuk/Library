@@ -13,7 +13,7 @@ import java.util.List;
  * Have fun!
  */
 @Repository
-public class HibernateAuthorDao implements AuthorDao {
+public class JpaAuthorDao implements AuthorDao {
 
     private static final String GET_BOOK_AUTHORS_QUERY =
             "SELECT AUTHOR.*\n" +

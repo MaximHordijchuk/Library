@@ -12,7 +12,7 @@ import javax.persistence.PersistenceContext;
  * Have fun!
  */
 @Repository
-public class HibernateBookDao implements BookDao {
+public class JpaBookDao implements BookDao {
 
     @PersistenceContext
     private EntityManager entityManager;

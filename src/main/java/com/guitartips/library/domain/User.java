@@ -20,13 +20,6 @@ public class User {
     @Column(name = "email", unique = true, nullable = false, length = 200)
     private String email;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name="USER_BOOK",
-            joinColumns={@JoinColumn(name="username", referencedColumnName="name")},
-            inverseJoinColumns={@JoinColumn(name="book_id", referencedColumnName="id")})
-    private List<Book> books;
-
     @OneToMany(targetEntity = Commit.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "username", insertable=false, updatable=false)
     public List<Commit> commits;
@@ -53,14 +46,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Book> getBooks() {
-        return books;
-    }
-
-    public void setBooks(List<Book> books) {
-        this.books = books;
     }
 
     public List<Commit> getCommits() {

@@ -12,16 +12,14 @@
     <p class="pull-right visible-xs">
         <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
     </p>
-    <div class="row">
-        <div class="panel panel-default well" id="book-info">
-            <c:if test="${isSelectedBook}">
-                <h2><c:out value="${selectedBook.title}"/></h2>
-                <p><em>Автори: <c:out value="${selectedBook.authorsString}"/></em></p>
-            </c:if>
-            <c:if test="${!isSelectedBook}">
-                <h2>Про книгу</h2>
-                <p>Оберіть книгу зі списку в лівій частині, щоб подивитися опис.</p>
-            </c:if>
+    <div class="row" style="word-wrap:break-word;">
+        <div class="panel panel-body" id="book-info">
+            <div class="page-header">
+                <p class="pull-right gray-text"><c:out value="${commit.date}"/></p>
+                <h1><c:out value="${commit.book.title}"/></h1>
+                <p class="gray-text"><em>Автори: <c:out value="${commit.book.authorsString}"/></em></p>
+            </div>
+            <p class="lead"><c:out value="${commit.comment}"/></p>
         </div>
     </div>
 </div>

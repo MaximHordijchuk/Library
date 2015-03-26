@@ -8,12 +8,8 @@ import com.guitartips.library.domain.Commit;
  */
 public interface CommitDao {
 
-    public void addCommit(Commit commit);
-
     public Commit getCommitById(String username, int bookId);
 
     public void updateCommit(Commit commit);
-
-    public void removeBook(String username, int bookId);
 
 }

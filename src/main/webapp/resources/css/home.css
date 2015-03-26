@@ -5,12 +5,10 @@
 html,
 body {
     overflow-x: hidden; /* Prevent scroll on narrow devices */
+    background: #eee;
 }
 body {
     padding-top: 70px;
-}
-footer {
-    padding: 30px 0;
 }
 
 .clickable:hover {
@@ -20,6 +18,17 @@ footer {
 .table-hover > thead > tr.info > th.clickable:hover {
     background-color: #c4e3f3;
 }
+
+.book-quote {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.gray-text {
+    color: #999999;
+}
+
+
 
 /*
  * Off Canvas

@@ -17,11 +17,6 @@ public class JpaCommitDao implements CommitDao {
     private EntityManager entityManager;
 
     @Override
-    public void addCommit(Commit commit) {
-        entityManager.persist(commit);
-    }
-
-    @Override
     public Commit getCommitById(String username, int bookId) {
         return entityManager.find(Commit.class, new Commit.CommitKey(username, bookId));
     }
@@ -29,11 +24,5 @@ public class JpaCommitDao implements CommitDao {
     @Override
     public void updateCommit(Commit commit) {
         entityManager.merge(commit);
-    }
-
-    @Override
-    public void removeBook(String username, int bookId) {
-        Commit commit = entityManager.find(Commit.class, new Commit.CommitKey(username, bookId));
-        entityManager.remove(commit);
     }
 }

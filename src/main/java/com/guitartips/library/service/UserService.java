@@ -20,9 +20,7 @@ public interface UserService {
 
     public void removeUser(String username);
 
-    public List<Book> getUserBooks(String username);
-
-    public void addNewBook(String username, Book book);
+    public void commitBook(String username, Book book, Commit commit);
 
     public List<Commit> getUserCommits(String username);
 

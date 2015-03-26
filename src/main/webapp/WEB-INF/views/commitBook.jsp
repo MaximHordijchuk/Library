@@ -37,16 +37,16 @@
                     </div>
                 </div>
             </div>
-            <%--<div class="form-group">
+            <div class="form-group">
                 <div class="row">
                     <div class="col-xs-8">
-                    <label class="control-label">Опис книги</label>
-                        <textarea id="description" name="description" rows="5"
+                    <label class="control-label">Ваші враження про книгу</label>
+                        <textarea id="comment" name="comment" rows="5"
                                 class="form-control"
-                                placeholder="«Кобзар» — назва збірки поетичних творів Тараса Григоровича Шевченка."></textarea>
+                                placeholder="Чудова книга! Всім раджу прочитати."></textarea>
                     </div>
                 </div>
-            </div>--%>
+            </div>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Додати книгу</button>
                 <button type="button" class="btn btn-default">Відмінити</button>

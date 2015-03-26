@@ -17,35 +17,36 @@
 
         <div class="panel panel-default" id="book-panel">
             <!-- Default panel contents -->
-            <div class="panel-heading">Список ваших книг</div>
-            <div class="panel-body">
-                <p>Тут будуть якісь цитати з книг</p>
+            <div class="panel-heading lead text-center">
+                Список ваших книг
+            </div>
+            <div class="panel-body book-quote">
+                <blockquote class="blockquote-reverse">
+                    Новое новому рознь, и слово «новая» звучит по-разному, в зависимости от того, покупаете ли вы или продаете.
+                    <footer>Еріх Марія Ремарк <cite title="Source Title">"Три товариші"</cite></footer>
+                </blockquote>
             </div>
 
-            <!-- Table -->
-            <table class="table table-striped table-bordered table-hover" id="book-table">
-                <thead>
-                <tr class="info">
-                    <th>#</th>
-                    <th class="clickable">Назва книги</th>
-                    <th>Автори</th>
-                </tr>
-                </thead>
-                <tbody>
+            <div class="list-group">
                 <c:set var="commitsSize" value="${fn:length(commits)}"/>
                 <c:if test="${commitsSize > 0}">
                     <c:forEach var="i" begin="0" end="${commitsSize - 1}">
-                        <tr class="success clickable" data-href="/book/${commits[i].book.id}">
-                            <th scope="row">${i + 1}</th>
-                            <td><c:out value="${commits[i].book.title}"/></td>
-                            <td><c:out value="${commits[i].book.authorsString}"/></td>
-                        </tr>
+                        <a class="list-group-item" style="word-wrap:break-word;" href="<c:url value="/book/${commits[i].book.id}"/>">
+                            <small class="pull-right gray-text"><c:out value="${commits[i].date}"/></small>
+                            <div>
+                                <strong><c:out value="${commits[i].book.title}"/> </strong>
+                                <span class="label label-success">Прочитано</span>
+                                <br>
+                                <small class="gray-text"><em>Автори: <c:out value="${commits[i].book.authorsString}"/></em></small>
+                                <div class="pull-right">
+                                    <span class="glyphicon glyphicon-pencil"></span> <span class="glyphicon glyphicon-trash"></span>
+                                </div>
+                            </div>
+                        </a>
                     </c:forEach>
                 </c:if>
-                </tbody>
-            </table>
+            </div>
         </div>
-        <%--<div class="col-xs-6 col-lg-6" id="book-info"></div>--%>
     </div>
 </div>
 

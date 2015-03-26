@@ -1,6 +1,5 @@
 package com.guitartips.library.dao;
 
-import com.guitartips.library.domain.Book;
 import com.guitartips.library.domain.Commit;
 import com.guitartips.library.domain.User;
 import org.springframework.stereotype.Repository;
@@ -8,8 +7,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -17,7 +14,7 @@ import java.util.List;
  * Have fun!
  */
 @Repository
-public class HibernateUserDao implements UserDao {
+public class JpaUserDao implements UserDao {
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -44,20 +41,6 @@ public class HibernateUserDao implements UserDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Book> getUserBooks(String username) {
-        try {
-            User user = entityManager.find(User.class, username);
-            List<Book> books = user.getBooks();
-            books.size();
-            return books;
-        } catch (PersistenceException ex) {
-            System.out.println(ex.getMessage());
-        }
-        return null;
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
     public List<Commit> getUserCommits(String username) {
         try {
             User user = entityManager.find(User.class, username);
@@ -71,10 +54,8 @@ public class HibernateUserDao implements UserDao {
     }
 
     @Override
-    public void addBook(String username, int bookId) {
+    public void addBook(Commit commit) {
         try {
-            Commit.CommitKey key = new Commit.CommitKey(username, bookId);
-            Commit commit = new Commit(key, Date.valueOf(LocalDate.now()), "Nice book!");
             entityManager.persist(commit);
         } catch (PersistenceException ex) {
             System.out.println(ex.getMessage());

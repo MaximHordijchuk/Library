@@ -27,6 +27,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="<s:url value="/resources/bootstrap-dist/css/bootstrap.min.css" />" rel="stylesheet">
+    <link href="<s:url value="/resources/bootstrap-dist/css/bootstrap-theme.min.css" />" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<c:url value="/resources/css/home.css"/>" rel="stylesheet">
@@ -49,11 +50,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Library</a>
+            <a class="navbar-brand" href="/">Library</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#">Home</a></li>
+                <li class="active"><a href="/">Головна</a></li>
                 <li><a href="#about">Про нас</a></li>
                 <li><a href="#contact">Контакти</a></li>
             </ul>

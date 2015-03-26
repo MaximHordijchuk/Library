@@ -1,16 +1,19 @@
 package com.guitartips.library.web;
 
 import com.guitartips.library.domain.Book;
+import com.guitartips.library.domain.Commit;
 import com.guitartips.library.service.BookService;
+import com.guitartips.library.service.CommitService;
 import com.guitartips.library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by max on 18.03.15.
@@ -24,37 +27,31 @@ public class BookController {
     private BookService bookService;
     @Autowired
     private UserService userService;
+    @Autowired
+    private CommitService commitService;
 
     @RequestMapping(value = "{bookId}", method = RequestMethod.GET)
     public String  getBookInfoById(@PathVariable int bookId, ModelMap model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        List<Book> books = userService.getUserBooks(auth.getName());
-        model.put("books", books);
-        boolean isSelectedBook = false;
-        for (Book book : books) {
-            if (book.getId() == bookId) {
-                model.put("selectedBook", book);
-                isSelectedBook = true;
-                break;
-            }
-        }
-        model.put("isSelectedBook", isSelectedBook);
+        Commit commit = commitService.getCommitById(auth.getName(), bookId);
+        model.put("commit", commit);
         return "book";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
-    public String  addNewBook(ModelMap model, @ModelAttribute Book book) {
-        if (book != null) {
+    public String commitBook(ModelMap model, @ModelAttribute Commit commit, @ModelAttribute Book book) {
+        if (commit == null) {
+            System.out.println("ERROR");
             // check
             // return errors
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        userService.addNewBook(auth.getName(), book);
+        userService.commitBook(auth.getName(), book, commit);
         return "redirect:/";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.GET)
-    public String  addBookViewForm() {
-        return "addBook";
+    public String  commitBookForm() {
+        return "commitBook";
     }
 }

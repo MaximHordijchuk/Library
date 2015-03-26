@@ -107,6 +107,10 @@ public class Commit {
         this.commitKey = commitKey;
     }
 
+    public String getDateString() {
+        return date.toLocalDate().toString();
+    }
+
     @Override
     public String toString() {
         return "Commit{" +

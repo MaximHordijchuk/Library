@@ -19,12 +19,6 @@ public class CommitServiceImpl implements CommitService {
 
     @Override
     @Transactional
-    public void addCommit(Commit commit) {
-        commitDao.addCommit(commit);
-    }
-
-    @Override
-    @Transactional
     public Commit getCommitById(String username, int bookId) {
         return commitDao.getCommitById(username, bookId);
     }
@@ -33,11 +27,5 @@ public class CommitServiceImpl implements CommitService {
     @Transactional
     public void updateCommit(Commit commit) {
         commitDao.updateCommit(commit);
-    }
-
-    @Override
-    @Transactional
-    public void removeBook(String username, int bookId) {
-        commitDao.removeBook(username, bookId);
     }
 }
